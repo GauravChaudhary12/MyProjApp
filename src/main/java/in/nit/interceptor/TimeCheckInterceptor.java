@@ -16,7 +16,7 @@ public class TimeCheckInterceptor implements HandlerInterceptor{
 		Calendar cl = Calendar.getInstance();
 		int hour = cl.get(Calendar.HOUR_OF_DAY);
 		System.out.println("TimeCheckInterceptor.preHandle()");
-		if(hour<9 || hour>=19) {
+		if(hour<12 || hour>=19) {
 			RequestDispatcher ds = req.getRequestDispatcher("/timeout.jsp");
 			ds.forward(req, res);
 			return false;

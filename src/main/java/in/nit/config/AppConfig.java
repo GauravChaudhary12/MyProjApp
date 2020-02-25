@@ -16,14 +16,18 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import in.nit.interceptor.TimeCheckInterceptor;
+import in.nit.model.Document;
 import in.nit.model.OrderMethod;
 import in.nit.model.ShipmentType;
+import in.nit.model.Uom;
 
 
 @EnableTransactionManagement
@@ -50,7 +54,7 @@ public class AppConfig  implements WebMvcConfigurer{
 	public LocalSessionFactoryBean sf() {
 		LocalSessionFactoryBean b = new LocalSessionFactoryBean();
 		b.setDataSource(ds());
-		b.setAnnotatedClasses(ShipmentType.class,OrderMethod.class);
+		b.setAnnotatedClasses(ShipmentType.class,OrderMethod.class,Uom.class,Document.class);
 		//b.setAnnotatedPackages("in.nit.model");
 		b.setHibernateProperties(props());
 		return b;
@@ -88,23 +92,22 @@ public class AppConfig  implements WebMvcConfigurer{
 	}
 	
 	
+//	@Bean
+//	public  TimeCheckInterceptor tci() {
+//		TimeCheckInterceptor t = new TimeCheckInterceptor();
+//		return t;
+//	}
+//	
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		registry.addInterceptor(tci());
+//	}
+	
 	@Bean
-	public  TimeCheckInterceptor tci() {
-		TimeCheckInterceptor t = new TimeCheckInterceptor();
-		return t;
+	public CommonsMultipartResolver multipartResolver() {
+		return new CommonsMultipartResolver();
 	}
-	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(tci());
-	}
-	
 }
-
-
-
-
-
 
 
 
